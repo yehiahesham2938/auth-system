@@ -1,4 +1,5 @@
-const users = []; // In-memory storage for demo purposes
+const users = [];  
+const refreshTokens = [];  
 
 class User {
   constructor(username, email, password, role = 'user') {
@@ -29,6 +30,18 @@ class User {
     
     users[userIndex] = { ...users[userIndex], ...updates };
     return users[userIndex];
+  }
+  static addRefreshToken(token, userId) {
+    refreshTokens.push({ token, userId });
+  }
+
+  static removeRefreshToken(token) {
+    const index = refreshTokens.findIndex(t => t.token === token);
+    if (index !== -1) refreshTokens.splice(index, 1);
+  }
+
+  static findRefreshToken(token) {
+    return refreshTokens.find(t => t.token === token);
   }
 }
 
